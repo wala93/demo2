@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./layouts/head.ejs') %>
+
+    <body>
+        <header>
+            <%- include('./layouts/nav.ejs') %>
+        </header>
+        <main>
+            <% characterInfo.forEach( character=> { %>
+                <section>
+                    <p>
+                        <%= character.name %>
+                    </p>
+                    <p>
+                        <%= character.house %>
+                    </p>
+                    <p>
+                        <%= character.patronus %>
+                    </p>
+                    <p>
+                        <%= character.is_alive %>
+                    </p>
+                </section>
+                <form action="/character/<%= character.id%>?_method=PUT" method="post">
+                    <input type="text" name="name" value="<%=character.name%>">
+                    <input type="text" name="house" value="<%= character.house%>">
+                    <input type="text" name="patronus" value="<%= character.patronus%>">
+                    <select name="status">
+                        <% if(character.is_alive){ %>
+                            <option value="t">Alive</option>
+                            <option value="f">Dead</option>
+                            <%} else {%>
+                                <option value="f">Dead</option>
+                                <option value="t">Alive</option>
+                                <%}%>
+                    </select>
+                    <input type="submit" value="Update Character Info">
+                </form>
+                <form action="/character/<%= character.id%>?_method=DELETE" method="post">
+                    <input type="submit" value="Delete Character">
+                </form>
+                <% }) %>
+        </main>
+    </body>
+
+</html>
